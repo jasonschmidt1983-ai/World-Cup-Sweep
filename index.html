@@ -103,11 +103,19 @@ h2 {
     align-items: center;
 }
 
+.flag {
+    width: 16px;
+    height: 12px;
+    margin-right: 6px;
+    border-radius: 2px;
+}
+
 .result {
     font-weight: bold;
     padding: 2px 6px;
     border-radius: 3px;
     font-size: 11px;
+    margin-left: 8px;
 }
 
 .win {
@@ -130,11 +138,12 @@ h2 {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
+    font-size: 13px;
 }
 
 .leaderboard-table th,
 .leaderboard-table td {
-    padding: 10px;
+    padding: 8px;
     text-align: left;
     border-bottom: 1px solid rgba(255,255,255,0.1);
 }
@@ -142,9 +151,16 @@ h2 {
 .leaderboard-table th {
     color: #00c6ff;
     font-weight: 600;
+    padding: 10px 8px;
 }
 
-.leaderboard-table tr:first-child {
+.leaderboard-table td:first-child {
+    font-weight: bold;
+    width: 40px;
+    text-align: center;
+}
+
+.leaderboard-table tr:nth-child(2) {
     background: rgba(255, 215, 0, 0.15);
 }
 
@@ -199,17 +215,9 @@ button.danger:hover {
     background: #ff6666;
 }
 
-/* SPARES LIST */
-.sidebar-right ul {
-    list-style: none;
-}
-
-.sidebar-right li {
-    padding: 10px;
-    margin: 8px 0;
-    background: rgba(0, 198, 255, 0.1);
-    border-radius: 6px;
-    border-left: 3px solid #00c6ff;
+/* SPARES BOX */
+#sparesBox {
+    margin-top: 10px;
 }
 
 /* RESPONSIVE */
@@ -287,18 +295,18 @@ Brazil 1-1 Germany</textarea>
 
   <!-- RIGHT: SPARES -->
   <div class="sidebar-right">
-    <h2>🔄 Spares</h2>
-    <ul>
-      <li>🇲🇽 Mexico</li>
-      <li>🇭🇹 Haiti</li>
-      <li>🇬🇧 England</li>
-      <li>🇨🇦 Canada</li>
-    </ul>
+    <h2>🎟 Spares</h2>
+    <div id="sparesBox"></div>
   </div>
 
 </div>
 
 <script>
+const players = [
+  "Allison","AP","Bec","Chrissy","Daniel",
+  "Jason","Kase","Niall","Reuben","Sarah","Tom"
+];
+
 const teamOwners = {
 "Australia":"Allison","Ivory Coast":"Allison","Norway":"Allison","Switzerland":"Allison",
 "Bosnia":"AP","Uruguay":"AP","USA":"AP","Argentina":"AP",
@@ -312,6 +320,28 @@ const teamOwners = {
 "Scotland":"Sarah","Senegal":"Sarah","Tunisia":"Sarah","Ecuador":"Sarah",
 "Iran":"Tom","Jordan":"Tom","Portugal":"Tom","Qatar":"Tom"
 };
+
+const spares = ["Mexico", "Haiti", "England", "Canada"];
+
+const flagMap = {
+    "Mexico": "mx", "Haiti": "ht", "England": "gb-eng", "Canada": "ca",
+    "Australia": "au", "Ivory Coast": "ci", "Norway": "no", "Switzerland": "ch",
+    "Bosnia": "ba", "Uruguay": "uy", "USA": "us", "Argentina": "ar",
+    "South Korea": "kr", "Curacao": "cw", "Czech Republic": "cz", "Cape Verde": "cv",
+    "Germany": "de", "Saudi Arabia": "sa", "South Africa": "za", "Brazil": "br",
+    "France": "fr", "Austria": "at", "Uzbekistan": "uz", "Belgium": "be",
+    "Turkey": "tr", "Paraguay": "py", "DR Congo": "cd", "Egypt": "eg",
+    "Morocco": "ma", "Colombia": "co", "New Zealand": "nz", "Japan": "jp",
+    "Netherlands": "nl", "Sweden": "se", "Ghana": "gh", "Croatia": "hr",
+    "Panama": "pa", "Spain": "es", "Algeria": "dz", "Iraq": "iq",
+    "Scotland": "gb-sct", "Senegal": "sn", "Tunisia": "tn", "Ecuador": "ec",
+    "Iran": "ir", "Jordan": "jo", "Portugal": "pt", "Qatar": "qa"
+};
+
+function getFlag(team) {
+    let code = flagMap[team] || "un";
+    return `https://flagcdn.com/w20/${code}.png`;
+}
 
 let teamResults = {};
 
@@ -387,6 +417,7 @@ function calculateScores() {
 
     updateLeaderboard(scores);
     renderTeams();
+    renderSpares();
 }
 
 // UPDATE LEADERBOARD
@@ -395,16 +426,25 @@ function updateLeaderboard(scores) {
     
     table.innerHTML = `
         <tr>
-            <th>Rank</th>
+            <th>#</th>
             <th>Name</th>
             <th>Pts</th>
         </tr>
     `;
 
-    let sorted = Object.keys(scores).sort((a,b)=>scores[b]-scores[a]);
+    // Ensure ALL players exist (even if 0 points)
+    players.forEach(player => {
+        if (!scores[player]) scores[player] = 0;
+    });
+
+    let sorted = players.sort((a,b) => scores[b] - scores[a]);
 
     sorted.forEach((name, index) => {
         let row = document.createElement("tr");
+
+        if (index === 0) {
+            row.style.background = "rgba(255,215,0,0.2)";
+        }
 
         let medal = "";
         if (index === 0) medal = "🥇 ";
@@ -451,6 +491,7 @@ function renderTeams() {
 
             return `
                 <div class="team">
+                    <img class="flag" src="${getFlag(team)}">
                     ${team}
                     <span class="result ${className}">
                         ${result}
@@ -462,6 +503,39 @@ function renderTeams() {
         card.innerHTML = name + teams;
         grid.appendChild(card);
     }
+}
+
+// RENDER SPARES
+function renderSpares() {
+    const box = document.getElementById("sparesBox");
+    box.innerHTML = "";
+
+    let card = document.createElement("div");
+    card.className = "card";
+
+    let title = `<div class="name">Spares</div>`;
+
+    let teams = spares.map(team => {
+        let result = teamResults[team] || "";
+        let className = "";
+
+        if (result === "W") className = "win";
+        if (result === "D") className = "draw";
+        if (result === "L") className = "loss";
+
+        return `
+            <div class="team">
+                <img class="flag" src="${getFlag(team)}">
+                ${team}
+                <span class="result ${className}">
+                    ${result}
+                </span>
+            </div>
+        `;
+    }).join("");
+
+    card.innerHTML = title + teams;
+    box.appendChild(card);
 }
 
 // AUTO LOAD ON PAGE OPEN
