@@ -7,7 +7,7 @@
 <style>
   body {
     font-family: Arial, sans-serif;
-    text-align: centre;
+    text-align: center;
     background: #f5f5f5;
     padding: 20px;
   }
@@ -21,45 +21,36 @@
     margin: 10px;
     font-size: 14px;
     cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background: #0078d4;
+    color: white;
+  }
+
+  button:hover {
+    background: #005fa3;
   }
 
   table {
     margin: 20px auto;
     border-collapse: collapse;
-    width: 300px;
+    width: 320px;
     background: white;
   }
 
   th, td {
     border: 1px solid #ccc;
-    padding: 8px;
+    padding: 10px;
   }
 
   th {
     background: #0078d4;
     color: white;
   }
-
-  .nav {
-    margin-bottom: 20px;
-  }
-
-  .nav a {
-    display: inline-block;
-    padding: 8px 12px;
-    background: #0078d4;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-  }
 </style>
 </head>
 
 <body>
-
-<div class="nav">
-  /">View NSW Catchment Map</a>
-</div>
 
 <h1>🏆 World Cup Sweep</h1>
 
@@ -78,18 +69,31 @@
 
 <script>
 
-// Players (edit these)
+// ✅ EDIT YOUR PLAYERS HERE
 const players = [
-  "Jason", "Meg", "Andrew", "Tom",
-  "Allison", "Rebecca", "Christine", "Niall"
+  "Jason",
+  "Meg",
+  "Andrew",
+  "Tom",
+  "Allison",
+  "Rebecca",
+  "Christine",
+  "Niall"
 ];
 
-// Teams (example World Cup style)
+// ✅ EDIT YOUR TEAMS HERE
 const teams = [
-  "Australia", "Brazil", "France", "Germany",
-  "Argentina", "England", "Spain", "Portugal"
+  "Australia",
+  "Brazil",
+  "France",
+  "Germany",
+  "Argentina",
+  "England",
+  "Spain",
+  "Portugal"
 ];
 
+// Shuffle function
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -97,6 +101,7 @@ function shuffle(array) {
   }
 }
 
+// Draw teams
 function drawTeams() {
   const shuffledTeams = [...teams];
   shuffle(shuffledTeams);
@@ -109,10 +114,12 @@ function drawTeams() {
       <td>${player}</td>
       <td>${shuffledTeams[index] || "-"}</td>
     </tr>`;
+
     table.innerHTML += row;
   });
 }
 
+// Reset
 function resetTeams() {
   document.getElementById("tableBody").innerHTML = "";
 }
