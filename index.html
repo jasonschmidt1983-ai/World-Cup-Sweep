@@ -61,6 +61,57 @@ header {
     margin-top: 15px;
 }
 
+/* MATCH RESULT FORM */
+.match-result-form {
+    background: linear-gradient(160deg, #122c5c, #091835);
+    padding: 20px;
+    margin: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(0,198,255,0.3);
+}
+
+.match-result-form h2 {
+    color: #00c6ff;
+    margin-top: 0;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 15px 0;
+}
+
+.form-group input {
+    width: 120px;
+    padding: 8px;
+    background: #091835;
+    border: 1px solid #00c6ff;
+    color: white;
+    border-radius: 4px;
+}
+
+.form-group input[type="number"] {
+    width: 60px;
+}
+
+.form-group button {
+    background: #00c6ff;
+    color: black;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.form-group button:hover {
+    background: #00d9ff;
+    transform: scale(1.05);
+}
+
 /* LAYOUT */
 .container {
     display: flex;
@@ -141,11 +192,9 @@ th {
     color: #00c6ff;
 }
 
-input {
-    width: 60px;
-    padding: 5px;
-    background: #091835;
-    border: 1px solid #00c6ff;
+input[readonly] {
+    background: transparent;
+    border: none;
     color: white;
 }
 
@@ -173,6 +222,20 @@ input {
     width="100%" 
     height="500">
   </iframe>
+</div>
+
+<div class="match-result-form">
+  <h2>📝 Enter Match Result</h2>
+  <div class="form-group">
+    <input id="team1" placeholder="e.g. Australia" type="text">
+    <span>Goals:</span>
+    <input id="score1" type="number" value="0">
+    <span style="font-weight:bold;">vs</span>
+    <input id="score2" type="number" value="0">
+    <span>Goals:</span>
+    <input id="team2" placeholder="e.g. Japan" type="text">
+    <button onclick="addResult()">Submit</button>
+  </div>
 </div>
 
 <div class="container">
@@ -302,46 +365,123 @@ input {
 </div>
 
 <script>
-const players = [
-"Allison","AP","Bec","Chrissy","Daniel","Jason",
-"Kase","Niall","Reuben","Sarah","Tom"
-];
+const API_KEY = "PASTE_YOUR_KEY_HERE";
 
-function load() {
-    let scores = JSON.parse(localStorage.getItem("scores")) || {};
+const teamOwners = {
+"Australia":"Allison","Ivory Coast":"Allison","Norway":"Allison","Switzerland":"Allison",
+"Bosnia":"AP","Uruguay":"AP","USA":"AP","Argentina":"AP",
+"South Korea":"Bec","Curacao":"Bec","Czech Republic":"Bec","Cape Verde":"Bec",
+"Germany":"Chrissy","Saudi Arabia":"Chrissy","South Africa":"Chrissy","Brazil":"Chrissy",
+"France":"Daniel","Austria":"Daniel","Uzbekistan":"Daniel","Belgium":"Daniel",
+"Turkey":"Jason","Paraguay":"Jason","DR Congo":"Jason","Egypt":"Jason",
+"Morocco":"Kase","Colombia":"Kase","New Zealand":"Kase","Japan":"Kase",
+"Netherlands":"Niall","Sweden":"Niall","Ghana":"Niall","Croatia":"Niall",
+"Panama":"Reuben","Spain":"Reuben","Algeria":"Reuben","Iraq":"Reuben",
+"Scotland":"Sarah","Senegal":"Sarah","Tunisia":"Sarah","Ecuador":"Sarah",
+"Iran":"Tom","Jordan":"Tom","Portugal":"Tom","Qatar":"Tom"
+};
+
+let playerScores = {};
+
+async function fetchResults() {
+    console.log("Fetching latest results...");
+    try {
+        const response = await fetch(
+            "https://v3.football.api-sports.io/fixtures?league=1&season=2026",
+            {
+                headers: {
+                    "x-apisports-key": API_KEY
+                }
+            }
+        );
+        const data = await response.json();
+        calculateScores(data.response);
+    } catch (error) {
+        console.error("API error:", error);
+    }
+}
+
+function calculateScores(matches) {
+    playerScores = {};
+    matches.forEach(match => {
+        if (match.fixture.status.short !== "FT") return;
+
+        let team1 = match.teams.home.name;
+        let team2 = match.teams.away.name;
+        let score1 = match.goals.home;
+        let score2 = match.goals.away;
+
+        let owner1 = teamOwners[team1];
+        let owner2 = teamOwners[team2];
+
+        if (!owner1 || !owner2) return;
+
+        if (!playerScores[owner1]) playerScores[owner1] = 0;
+        if (!playerScores[owner2]) playerScores[owner2] = 0;
+
+        if (score1 > score2) {
+            playerScores[owner1] += 3;
+        } else if (score2 > score1) {
+            playerScores[owner2] += 3;
+        } else {
+            playerScores[owner1] += 1;
+            playerScores[owner2] += 1;
+        }
+    });
+
+    updateLeaderboard();
+}
+
+function addResult() {
+    let t1 = document.getElementById("team1").value.trim();
+    let t2 = document.getElementById("team2").value.trim();
+    let s1 = parseInt(document.getElementById("score1").value);
+    let s2 = parseInt(document.getElementById("score2").value);
+
+    if(!teamOwners[t1] || !teamOwners[t2]) {
+        alert("Team name not recognised");
+        return;
+    }
+
+    let owner1 = teamOwners[t1];
+    let owner2 = teamOwners[t2];
+
+    if(!playerScores[owner1]) playerScores[owner1] = 0;
+    if(!playerScores[owner2]) playerScores[owner2] = 0;
+
+    if(s1 > s2) {
+        playerScores[owner1] += 3;
+    } else if(s2 > s1) {
+        playerScores[owner2] += 3;
+    } else {
+        playerScores[owner1] += 1;
+        playerScores[owner2] += 1;
+    }
+
+    document.getElementById("team1").value = "";
+    document.getElementById("team2").value = "";
+    document.getElementById("score1").value = "0";
+    document.getElementById("score2").value = "0";
+
+    updateLeaderboard();
+}
+
+function updateLeaderboard() {
     let table = document.getElementById("leaderboard");
-
     table.innerHTML = "<tr><th>Name</th><th>Points</th></tr>";
 
-    players.sort((a,b)=>(scores[b]||0)-(scores[a]||0));
+    let sorted = Object.keys(playerScores)
+        .sort((a, b) => playerScores[b] - playerScores[a]);
 
-    players.forEach(name=>{
+    sorted.forEach(name => {
         let row = document.createElement("tr");
-
-        let score = scores[name] || 0;
-
-        let nameCell = document.createElement("td");
-        nameCell.innerText = name;
-
-        let input = document.createElement("input");
-        input.value = score;
-
-        input.onchange = () => {
-            scores[name] = parseInt(input.value)||0;
-            localStorage.setItem("scores", JSON.stringify(scores));
-            load();
-        };
-
-        let scoreCell = document.createElement("td");
-        scoreCell.appendChild(input);
-
-        row.appendChild(nameCell);
-        row.appendChild(scoreCell);
+        row.innerHTML = `<td>${name}</td><td>${playerScores[name]}</td>`;
         table.appendChild(row);
     });
 }
 
-load();
+fetchResults();
+setInterval(fetchResults, 8 * 60 * 60 * 1000);
 </script>
 
 </body>
