@@ -46,17 +46,8 @@ header {
 
 /* MAIN CONTENT */
 .main {
-    width: 60%;
+    width: 80%;
     padding: 25px;
-    overflow-y: auto;
-}
-
-/* RIGHT SIDEBAR - SPARES */
-.sidebar-right {
-    width: 20%;
-    background: #050f25;
-    padding: 20px;
-    border-left: 2px solid #1e3a8a;
     overflow-y: auto;
 }
 
@@ -88,10 +79,25 @@ h2 {
     box-shadow: 0 0 15px rgba(0,198,255,0.5);
 }
 
+/* LEADER CARD */
+.card.leader-card {
+    background: linear-gradient(160deg, #2a4a00, #1a3a00);
+    border: 2px solid #00ff88;
+    box-shadow: 0 0 20px rgba(0,255,136,0.4);
+}
+
+.card.leader-card:hover {
+    box-shadow: 0 0 30px rgba(0,255,136,0.6);
+}
+
 .name {
     font-weight: bold;
     margin-bottom: 8px;
     color: #00c6ff;
+}
+
+.card.leader-card .name {
+    color: #00ff88;
 }
 
 /* TEAMS */
@@ -110,12 +116,20 @@ h2 {
     border-radius: 2px;
 }
 
+.team-info {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
 .result {
     font-weight: bold;
     padding: 2px 6px;
     border-radius: 3px;
     font-size: 11px;
     margin-left: 8px;
+    min-width: 28px;
+    text-align: center;
 }
 
 .win {
@@ -215,11 +229,6 @@ button.danger:hover {
     background: #ff6666;
 }
 
-/* SPARES BOX */
-#sparesBox {
-    margin-top: 10px;
-}
-
 /* RESPONSIVE */
 @media (max-width: 900px) {
     .container {
@@ -227,7 +236,6 @@ button.danger:hover {
     }
 
     .sidebar-left,
-    .sidebar-right,
     .main {
         width: 100%;
         min-height: auto;
@@ -270,7 +278,7 @@ button.danger:hover {
     <table class="leaderboard-table" id="leaderboard"></table>
   </div>
 
-  <!-- MIDDLE: TEAMS + RESULTS -->
+  <!-- MAIN: TEAMS + RESULTS -->
   <div class="main">
 
     <h2>Teams</h2>
@@ -291,12 +299,6 @@ Brazil 1-1 Germany</textarea>
       </div>
     </div>
 
-  </div>
-
-  <!-- RIGHT: SPARES -->
-  <div class="sidebar-right">
-    <h2>🎟 Spares</h2>
-    <div id="sparesBox"></div>
   </div>
 
 </div>
@@ -344,6 +346,8 @@ function getFlag(team) {
 }
 
 let teamResults = {};
+let teamGoals = {};
+let leader = "";
 
 // SAVE RESULTS
 function saveResults() {
@@ -369,6 +373,7 @@ function resetScores() {
         localStorage.removeItem("matchResults");
         document.getElementById("resultsInput").value = "";
         teamResults = {};
+        teamGoals = {};
         calculateScores();
         alert("✅ All results cleared!");
     }
@@ -381,6 +386,7 @@ function calculateScores() {
 
     let scores = {};
     teamResults = {};
+    teamGoals = {};
 
     lines.forEach(line => {
         let match = line.match(/(.+)\s(\d+)-(\d+)\s(.+)/);
@@ -398,6 +404,10 @@ function calculateScores() {
 
         if (!scores[p1]) scores[p1] = 0;
         if (!scores[p2]) scores[p2] = 0;
+
+        // Track goals
+        teamGoals[t1] = s1;
+        teamGoals[t2] = s2;
 
         if (s1 > s2) {
             scores[p1] += 3;
@@ -417,7 +427,6 @@ function calculateScores() {
 
     updateLeaderboard(scores);
     renderTeams();
-    renderSpares();
 }
 
 // UPDATE LEADERBOARD
@@ -444,6 +453,7 @@ function updateLeaderboard(scores) {
 
         if (index === 0) {
             row.style.background = "rgba(255,215,0,0.2)";
+            leader = name; // Track the leader
         }
 
         let medal = "";
@@ -475,9 +485,12 @@ function renderTeams() {
         grouped[owner].push(team);
     }
 
+    // Render all players
     for (let person in grouped) {
         let card = document.createElement("div");
-        card.className = "card";
+
+        let highlight = person === leader ? "leader-card" : "";
+        card.className = "card " + highlight;
 
         let name = `<div class="name">${person}</div>`;
 
@@ -489,10 +502,14 @@ function renderTeams() {
             if (result === "D") className = "draw";
             if (result === "L") className = "loss";
 
+            let goals = teamGoals[team] || 0;
+
             return `
                 <div class="team">
-                    <img class="flag" src="${getFlag(team)}">
-                    ${team}
+                    <div class="team-info">
+                        <img class="flag" src="${getFlag(team)}">
+                        ${team} (${goals})
+                    </div>
                     <span class="result ${className}">
                         ${result}
                     </span>
@@ -503,17 +520,19 @@ function renderTeams() {
         card.innerHTML = name + teams;
         grid.appendChild(card);
     }
+
+    // Add spares as last card
+    renderSparesInline(grid);
 }
 
-// RENDER SPARES
-function renderSpares() {
-    const box = document.getElementById("sparesBox");
-    box.innerHTML = "";
-
+// RENDER SPARES INLINE
+function renderSparesInline(grid) {
     let card = document.createElement("div");
-    card.className = "card";
 
-    let title = `<div class="name">Spares</div>`;
+    let highlight = (leader === "Spares") ? "leader-card" : "";
+    card.className = "card " + highlight;
+
+    let name = `<div class="name">🎟 Spares</div>`;
 
     let teams = spares.map(team => {
         let result = teamResults[team] || "";
@@ -523,10 +542,14 @@ function renderSpares() {
         if (result === "D") className = "draw";
         if (result === "L") className = "loss";
 
+        let goals = teamGoals[team] || 0;
+
         return `
             <div class="team">
-                <img class="flag" src="${getFlag(team)}">
-                ${team}
+                <div class="team-info">
+                    <img class="flag" src="${getFlag(team)}">
+                    ${team} (${goals})
+                </div>
                 <span class="result ${className}">
                     ${result}
                 </span>
@@ -534,8 +557,8 @@ function renderSpares() {
         `;
     }).join("");
 
-    card.innerHTML = title + teams;
-    box.appendChild(card);
+    card.innerHTML = name + teams;
+    grid.appendChild(card);
 }
 
 // AUTO LOAD ON PAGE OPEN
