@@ -58,7 +58,7 @@
 <body>
 
 <div class="nav">
-  <a href="map/">View NSW Catchment Map</a>
+  /">View NSW Catchment Map</a>
 </div>
 
 <h1>🏆 World Cup Sweep</h1>
@@ -80,3 +80,44 @@
 
 // Players (edit these)
 const players = [
+  "Jason", "Meg", "Andrew", "Tom",
+  "Allison", "Rebecca", "Christine", "Niall"
+];
+
+// Teams (example World Cup style)
+const teams = [
+  "Australia", "Brazil", "France", "Germany",
+  "Argentina", "England", "Spain", "Portugal"
+];
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+function drawTeams() {
+  const shuffledTeams = [...teams];
+  shuffle(shuffledTeams);
+
+  const table = document.getElementById("tableBody");
+  table.innerHTML = "";
+
+  players.forEach((player, index) => {
+    const row = `<tr>
+      <td>${player}</td>
+      <td>${shuffledTeams[index] || "-"}</td>
+    </tr>`;
+    table.innerHTML += row;
+  });
+}
+
+function resetTeams() {
+  document.getElementById("tableBody").innerHTML = "";
+}
+
+</script>
+
+</body>
+</html>
