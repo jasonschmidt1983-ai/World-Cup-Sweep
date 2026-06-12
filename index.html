@@ -38,27 +38,17 @@ header {
     border-left: 2px solid #1e3a8a;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 18px;
-}
-
 .card {
     background: linear-gradient(160deg, #122c5c, #091835);
     padding: 15px;
     border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.08);
     margin-bottom: 10px;
 }
 
-.name {
-    font-weight: 600;
-}
-
-.flag {
-    width: 20px;
-    margin-right: 8px;
+/* leaderboard styling */
+.leaderboard .card {
+    display: flex;
+    justify-content: space-between;
 }
 </style>
 </head>
@@ -78,3 +68,96 @@ header {
 <div class="card"><b>AP</b><br>Bosnia, Uruguay, USA, Argentina</div>
 <div class="card"><b>Bec</b><br>South Korea, Curacao, Czech Republic, Cape Verde</div>
 <div class="card"><b>Chrissy</b><br>Germany, Saudi Arabia, South Africa, Brazil</div>
+<div class="card"><b>Daniel</b><br>France, Austria, Uzbekistan, Belgium</div>
+<div class="card"><b>Kase</b><br>Morocco, Colombia, New Zealand, Japan</div>
+<div class="card"><b>Niall</b><br>Netherlands, Sweden, Ghana, Croatia</div>
+<div class="card"><b>Reuben</b><br>Panama, Spain, Algeria, Iraq</div>
+<div class="card"><b>Sarah</b><br>Scotland, Senegal, Tunisia, Ecuador</div>
+<div class="card"><b>Tom</b><br>Iran, Jordan, Portugal, Qatar</div>
+
+<h2>🏅 Leaderboard</h2>
+<div class="leaderboard">
+  <div id="leaderboard"></div>
+</div>
+
+</div>
+
+<div class="spares">
+<h2>🔄 Spares</h2>
+<ul>
+<li>Mexico</li>
+<li>Haiti</li>
+<li>England</li>
+<li>Canada</li>
+</ul>
+</div>
+
+</div>
+
+<script>
+
+// players
+const players = [
+  { name: "Jason", teams: ["Turkey","Paraguay","DR Congo","Egypt"] },
+  { name: "Allison", teams: ["Australia","Ivory Coast","Norway","Switzerland"] },
+  { name: "AP", teams: ["Bosnia","Uruguay","USA","Argentina"] },
+  { name: "Bec", teams: ["South Korea","Curacao","Czech Republic","Cape Verde"] },
+  { name: "Chrissy", teams: ["Germany","Saudi Arabia","South Africa","Brazil"] },
+  { name: "Daniel", teams: ["France","Austria","Uzbekistan","Belgium"] },
+  { name: "Kase", teams: ["Morocco","Colombia","New Zealand","Japan"] },
+  { name: "Niall", teams: ["Netherlands","Sweden","Ghana","Croatia"] },
+  { name: "Reuben", teams: ["Panama","Spain","Algeria","Iraq"] },
+  { name: "Sarah", teams: ["Scotland","Senegal","Tunisia","Ecuador"] },
+  { name: "Tom", teams: ["Iran","Jordan","Portugal","Qatar"] }
+];
+
+// results (you edit)
+const results = [
+  { team1: "Mexico", score1: 2, team2: "South Africa", score2: 0 },
+  { team1: "South Korea", score1: 2, team2: "Czech Republic", score2: 1 }
+];
+
+// points calc
+function getPoints(team) {
+  let pts = 0;
+  results.forEach(m => {
+    if (team === m.team1 || team === m.team2) {
+      let gf = team === m.team1 ? m.score1 : m.score2;
+      let ga = team === m.team1 ? m.score2 : m.score1;
+
+      if (gf > ga) pts += 3;
+      else if (gf === ga) pts += 1;
+    }
+  });
+  return pts;
+}
+
+// totals
+players.forEach(p => {
+  p.total = 0;
+  p.teams.forEach(t => p.total += getPoints(t));
+});
+
+// sort
+players.sort((a,b) => b.total - a.total);
+
+// render
+const el = document.getElementById("leaderboard");
+
+players.forEach((p,i) => {
+  const row = document.createElement("div");
+  row.className = "card";
+
+  row.innerHTML = `<span>${i+1}. ${p.name}</span><span>${p.total} pts</span>`;
+
+  if(i === 0 && p.total > 0){
+    row.style.border = "2px solid gold";
+  }
+
+  el.appendChild(row);
+});
+
+</script>
+
+</body>
+</html>
