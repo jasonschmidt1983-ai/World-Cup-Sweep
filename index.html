@@ -99,7 +99,10 @@ header {
 <div class="card"><b>Tom</b><br>Iran, Jordan, Portugal, Qatar</div>
 
 <h2>Leaderboard</h2>
-
+<div class="leaderboard">
+  <h2>🏅 Leaderboard</h2>
+  <div id="leaderboard"></div>
+</div>
 <div class="grid">
 
 <div class="card">
@@ -125,6 +128,77 @@ header {
 </div>
 
 </div>
+<script>
 
+// ✅ PLAYERS (leave as is from your page if already defined)
+const players = [
+  { name: "Jason", teams: ["Turkey","Paraguay","DR Congo","Egypt"] },
+  { name: "Allison", teams: ["Australia","Ivory Coast","Norway","Switzerland"] },
+  { name: "AP", teams: ["Bosnia","Uruguay","USA","Argentina"] },
+  { name: "Bec", teams: ["South Korea","Curacao","Czech Republic","Cape Verde"] },
+  { name: "Chrissy", teams: ["Germany","Saudi Arabia","South Africa","Brazil"] },
+  { name: "Daniel", teams: ["France","Austria","Uzbekistan","Belgium"] },
+  { name: "Kase", teams: ["Morocco","Colombia","New Zealand","Japan"] },
+  { name: "Niall", teams: ["Netherlands","Sweden","Ghana","Croatia"] },
+  { name: "Reuben", teams: ["Panama","Spain","Algeria","Iraq"] },
+  { name: "Sarah", teams: ["Scotland","Senegal","Tunisia","Ecuador"] },
+  { name: "Tom", teams: ["Iran","Jordan","Portugal","Qatar"] }
+];
+
+// ✅ MATCH RESULTS (YOU UPDATE THIS ONLY)
+const results = [
+  { team1: "Mexico", score1: 2, team2: "South Africa", score2: 0 },
+  { team1: "South Korea", score1: 2, team2: "Czech Republic", score2: 1 }
+];
+
+// ✅ CALCULATE POINTS
+function getPoints(team) {
+  let points = 0;
+
+  results.forEach(match => {
+    if (team === match.team1 || team === match.team2) {
+      let gf = team === match.team1 ? match.score1 : match.score2;
+      let ga = team === match.team1 ? match.score2 : match.score1;
+
+      if (gf > ga) points += 3;
+      else if (gf === ga) points += 1;
+    }
+  });
+
+  return points;
+}
+
+// ✅ CALCULATE TOTALS
+players.forEach(p => {
+  p.total = 0;
+  p.teams.forEach(t => {
+    p.total += getPoints(t);
+  });
+});
+
+// ✅ SORT
+players.sort((a, b) => b.total - a.total);
+
+// ✅ RENDER (uses your existing styling)
+const board = document.getElementById("leaderboard");
+board.innerHTML = "";
+
+players.forEach((p, i) => {
+  const row = document.createElement("div");
+
+  row.className = "card";
+  row.innerHTML = `
+    <strong>${i + 1}. ${p.name}</strong> - ${p.total} pts
+  `;
+
+  // highlight leader
+  if (i === 0 && p.total > 0) {
+    row.style.border = "2px solid gold";
+  }
+
+  board.appendChild(row);
+});
+
+</script>
 </body>
 </html>
