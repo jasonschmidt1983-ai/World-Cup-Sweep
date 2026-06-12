@@ -38,23 +38,19 @@ header {
     border-left: 2px solid #1e3a8a;
 }
 
+/* GRID */
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 18px;
 }
 
+/* CARDS */
 .card {
     background: linear-gradient(160deg, #122c5c, #091835);
     padding: 15px;
     border-radius: 12px;
     border: 1px solid rgba(255,255,255,0.08);
-    transition: 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0 18px rgba(0,198,255,0.6);
 }
 
 .name {
@@ -62,6 +58,7 @@ header {
     margin-bottom: 10px;
 }
 
+/* TEAM ROW */
 .team {
     display: flex;
     align-items: center;
@@ -102,6 +99,7 @@ header {
 
 <div class="grid">
 
+<!-- Jason -->
 <div class="card">
   <div class="name">Jason</div>
   <div class="team"><img class="flag" src="https://flagcdn.com/w20/tr.png">Turkey</div>
@@ -110,21 +108,9 @@ header {
   <div class="team"><img class="flag" src="https://flagcdn.com/w20/eg.png">Egypt</div>
 </div>
 
-</div>
-
-</div>
-
-<div class="spares">
-<h2>🔄 Spares</h2>
-<ul>
-<li><img class="flag" src="https://flagcdn.com/w20/mx.png"> Mexico</li>
-<li><img class="flag" src="https://flagcdn.com/w20/ht.png"> Haiti</li>
-<li><img class="flag" src="https://flagcdn.com/w20/gb-eng.png"> England</li>
-<li><img class="flag" src="https://flagcdn.com/w20/ca.png"> Canada</li>
-</ul>
-</div>
-
-</div>
-
-</body>
-</html>
+<!-- Allison -->
+<div class="card">
+  <div class="name">Allison</div>
+  <div class="team"><img class="flag" src="https://flagcdn.com/w20/au.png">Australia</div>
+  <div class="team"><img class="flag" src="https://flagcdn.com/w20/ci.png">Ivory Coast</div>
+  <div class="team"><img class="flag" src="https://flagcdn.com/w20/no.png">Norway</div>
