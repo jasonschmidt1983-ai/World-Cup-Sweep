@@ -1,0 +1,51 @@
+[
+  {
+    "region": "South Western NSW",
+    "coordinator": "Jason Schmidt",
+    "email": "jason.schmidt@adf.org.au",
+    "phone": "02 5114 8607",
+    "lgas": [
+      "Albury City Council",
+      "Balranald Shire Council",
+      "Berrigan Shire Council",
+      "Carrathool Shire Council",
+      "Coolamon Shire Council",
+      "Cootamundra-Gundagai Regional Council",
+      "Edward River Council",
+      "Federation Council",
+      "Griffith City Council",
+      "Hay Shire Council",
+      "Hilltops Council",
+      "Junee Shire Council",
+      "Leeton Shire Council",
+      "Murray River Council",
+      "Murrumbidgee Council",
+      "Narrandera Shire Council",
+      "Temora Shire Council",
+      "Wagga Wagga City Council",
+      "Wentworth Shire Council",
+      "Yass Valley Council",
+      "Lachlan Shire Council",
+      "Upper Lachlan Shire Council"
+    ]
+  },
+  {
+    "region": "Southern NSW",
+    "coordinator": "Allison Reid",
+    "email": "allison.reid@adf.org.au",
+    "phone": "0400 639 133",
+    "lgas": [
+      "Bega Valley Shire Council",
+      "Eurobodalla Shire Council",
+      "Shoalhaven City Council",
+      "Kiama Municipal Council",
+      "Shellharbour City Council",
+      "Queanbeyan-Palerang Regional Council",
+      "Snowy Monaro Regional Council",
+      "Snowy Valleys Council",
+      "Goulburn Mulwaree Council",
+      "Greater Hume Shire Council",
+      "Lockhart Shire Council"
+    ]
+  }
+]
