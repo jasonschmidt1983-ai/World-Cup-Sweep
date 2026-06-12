@@ -1,94 +1,261 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>World Cup Sweep</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
 <style>
 body {
-    font-family: Arial;
-    background: #0b1c3d;
-    color: white;
     margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at top, #0b1c3d, #020917);
+    color: white;
 }
 
+/* HEADER */
 header {
-    background: #004aad;
-    padding: 15px;
+    background: linear-gradient(90deg, #004aad, #00c6ff);
+    padding: 20px;
     text-align: center;
-    font-size: 24px;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 1px;
 }
 
+/* LAYOUT */
 .container {
     display: flex;
 }
 
 .main {
     width: 75%;
-    padding: 20px;
-}
-
-.card {
-    background: #122c5c;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 8px;
+    padding: 25px;
 }
 
 .spares {
     width: 25%;
     background: #050f25;
-    padding: 20px;
+    padding: 25px;
+    border-left: 2px solid #1e3a8a;
+}
+
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 18px;
+}
+
+/* CARDS */
+.card {
+    background: linear-gradient(160deg, #122c5c, #091835);
+    padding: 15px;
+    border-radius: 12px;
+    transition: 0.3s;
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 18px rgba(0,198,255,0.6);
+}
+
+.name {
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+/* TEAMS */
+.team {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    margin: 6px 0;
+}
+
+.flag {
+    width: 20px;
+    height: 14px;
+    margin-right: 8px;
+    border-radius: 2px;
+}
+
+/* LEADERBOARD */
+.leaderboard {
+    margin-top: 30px;
 }
 
 table {
     width: 100%;
-    margin-top: 20px;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+th {
+    color: #00c6ff;
 }
 
 input {
-    width: 50px;
+    width: 60px;
+    padding: 5px;
+    background: #091835;
+    border: 1px solid #00c6ff;
+    color: white;
+}
+
+/* SPARES */
+.spares h2 {
+    margin-top: 0;
+}
+
+.spares li {
+    margin: 8px 0;
 }
 </style>
 </head>
 
 <body>
 
-<header>World Cup Sweep</header>
+<header>🏆 World Cup Sweep 2026</header>
 
 <div class="container">
 
 <div class="main">
 
-<h2>Teams</h2>
+<div class="grid">
 
-<div class="card"><b>Jason</b><br>Turkey, Paraguay, DR Congo, Egypt</div>
-<div class="card"><b>Allison</b><br>Australia, Ivory Coast, Norway, Switzerland</div>
-<div class="card"><b>AP</b><br>Bosnia, Uruguay, USA, Argentina</div>
-<div class="card"><b>Bec</b><br>South Korea, Curacao, Czech Republic, Cape Verde</div>
-<div class="card"><b>Chrissy</b><br>Germany, Saudi Arabia, South Africa, Brazil</div>
-<div class="card"><b>Daniel</b><br>France, Austria, Uzbekistan, Belgium</div>
-<div class="card"><b>Kase</b><br>Morocco, Colombia, NZ, Japan</div>
-<div class="card"><b>Niall</b><br>Netherlands, Sweden, Ghana, Croatia</div>
-<div class="card"><b>Reuben</b><br>Panama, Spain, Algeria, Iraq</div>
-<div class="card"><b>Sarah</b><br>Scotland, Senegal, Tunisia, Ecuador</div>
-<div class="card"><b>Tom</b><br>Iran, Jordan, Portugal, Qatar</div>
+<!-- Allison -->
+<div class="card">
+<div class="name">Allison</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/au.png">Australia</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/ci.png">Ivory Coast</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/no.png">Norway</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/ch.png">Switzerland</div>
+</div>
 
-<h2>Leaderboard</h2>
+<!-- AP -->
+<div class="card">
+<div class="name">AP</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/ba.png">Bosnia</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/uy.png">Uruguay</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/us.png">USA</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/ar.png">Argentina</div>
+</div>
+
+<!-- Bec -->
+<div class="card">
+<div class="name">Bec</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/kr.png">South Korea</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/cw.png">Curacao</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/cz.png">Czech Republic</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/cv.png">Cape Verde</div>
+</div>
+
+<!-- Chrissy -->
+<div class="card">
+<div class="name">Chrissy</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/de.png">Germany</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/sa.png">Saudi Arabia</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/za.png">South Africa</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/br.png">Brazil</div>
+</div>
+
+<!-- Daniel -->
+<div class="card">
+<div class="name">Daniel</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/fr.png">France</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/at.png">Austria</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/uz.png">Uzbekistan</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/be.png">Belgium</div>
+</div>
+
+<!-- Jason -->
+<div class="card">
+<div class="name">Jason</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/tr.png">Turkey</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/py.png">Paraguay</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/cd.png">DR Congo</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/eg.png">Egypt</div>
+</div>
+
+<!-- Kase -->
+<div class="card">
+<div class="name">Kase</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/ma.png">Morocco</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/co.png">Colombia</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/nz.png">New Zealand</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/jp.png">Japan</div>
+</div>
+
+<!-- Niall -->
+<div class="card">
+<div class="name">Niall</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/nl.png">Netherlands</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/se.png">Sweden</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/gh.png">Ghana</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/hr.png">Croatia</div>
+</div>
+
+<!-- Reuben -->
+<div class="card">
+<div class="name">Reuben</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/pa.png">Panama</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/es.png">Spain</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/dz.png">Algeria</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/iq.png">Iraq</div>
+</div>
+
+<!-- Sarah -->
+<div class="card">
+<div class="name">Sarah</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/gb-sct.png">Scotland</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/sn.png">Senegal</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/tn.png">Tunisia</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/ec.png">Ecuador</div>
+</div>
+
+<!-- Tom -->
+<div class="card">
+<div class="name">Tom</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/ir.png">Iran</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/jo.png">Jordan</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/pt.png">Portugal</div>
+<div class="team"><img class="flag" src="https://flagcdn.com/w20/qa.png">Qatar</div>
+</div>
+
+</div>
+
+<div class="leaderboard">
+<h2>🏅 Leaderboard</h2>
 <table id="leaderboard"></table>
+</div>
 
 </div>
 
 <div class="spares">
-<h3>Spares</h3>
-Mexico<br>Haiti<br>England<br>Canada
+<h2>🔄 Spares</h2>
+<ul>
+<li><img class="flag" src="https://flagcdn.com/w20/mx.png">Mexico</li>
+<li><img class="flag" src="https://flagcdn.com/w20/ht.png">Haiti</li>
+<li><img class="flag" src="https://flagcdn.com/w20/gb-eng.png">England</li>
+<li><img class="flag" src="https://flagcdn.com/w20/ca.png">Canada</li>
+</ul>
 </div>
 
 </div>
 
 <script>
 const players = [
-"Jason","Allison","AP","Bec","Chrissy","Daniel",
+"Allison","AP","Bec","Chrissy","Daniel","Jason",
 "Kase","Niall","Reuben","Sarah","Tom"
 ];
 
