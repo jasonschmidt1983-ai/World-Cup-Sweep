@@ -1,130 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <title>World Cup Sweep</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background: #f5f5f5;
+body {
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at top, #0b1c3d, #020917);
+    color: white;
+    margin: 0;
+}
+
+header {
+    background: linear-gradient(90deg, #004aad, #00c6ff);
     padding: 20px;
-  }
-
-  h1 {
-    margin-bottom: 10px;
-  }
-
-  button {
-    padding: 10px 15px;
-    margin: 10px;
-    font-size: 14px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background: #0078d4;
-    color: white;
-  }
-
-  button:hover {
-    background: #005fa3;
-  }
-
-  table {
-    margin: 20px auto;
-    border-collapse: collapse;
-    width: 320px;
-    background: white;
-  }
-
-  th, td {
-    border: 1px solid #ccc;
-    padding: 10px;
-  }
-
-  th {
-    background: #0078d4;
-    color: white;
-  }
-</style>
-</head>
-
-<body>
-
-<h1>🏆 World Cup Sweep</h1>
-
-<button onclick="drawTeams()">Draw Teams</button>
-<button onclick="resetTeams()">Reset</button>
-
-<table>
-  <thead>
-    <tr>
-      <th>Player</th>
-      <th>Team</th>
-    </tr>
-  </thead>
-  <tbody id="tableBody"></tbody>
-</table>
-
-<script>
-
-// ✅ EDIT YOUR PLAYERS HERE
-const players = [
-  "Jason",
-  "Meg",
-  "Andrew",
-  "Tom",
-  "Allison",
-  "Rebecca",
-  "Christine",
-  "Niall"
-];
-
-// ✅ EDIT YOUR TEAMS HERE
-const teams = [
-  "Australia",
-  "Brazil",
-  "France",
-  "Germany",
-  "Argentina",
-  "England",
-  "Spain",
-  "Portugal"
-];
-
-// Shuffle function
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
+    text-align: center;
+    font-size: 30px;
+    font-weight: 600;
 }
 
-// Draw teams
-function drawTeams() {
-  const shuffledTeams = [...teams];
-  shuffle(shuffledTeams);
-
-  const table = document.getElementById("tableBody");
-  table.innerHTML = "";
-
-  players.forEach((player, index) => {
-    const row = `<tr>
-      <td>${player}</td>
-      <td>${shuffledTeams[index] || "-"}</td>
-    </tr>`;
-
-    table.innerHTML += row;
-  });
+/* LAYOUT */
+.container {
+    display: flex;
 }
 
-// Reset
-function resetTeams() {
-  document.getElementById("tableBody").innerHTML = "";
+.main {
+    width: 75%;
+    padding: 20px;
 }
 
-</script>
+.spares {
+    width: 25%;
+    background: #050f25;
+    padding: 25px;
+    border-left: 2px solid #1e3a8a;
+}
 
-</body>
-</html>
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 18px;
+}
+
+/* CARD */
+.card {
+    background: linear-gradient(160deg, #122c5c, #091835);
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 18px rgba(0,198,255,0.6);
+}
+
+.name {
+    font-weight: 600;
