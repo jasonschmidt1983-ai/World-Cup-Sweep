@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>World Cup Sweep</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #0b1c3d;
+    color: white;
+    margin: 0;
+}
+
+header {
+    background: #004aad;
+    padding: 15px;
+    text-align: center;
+    font-size: 24px;
+}
+
+.container {
+    display: flex;
+}
+
+.main {
+    width: 75%;
+    padding: 20px;
+}
+
+.card {
+    background: #122c5c;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 8px;
+}
+
+.spares {
+    width: 25%;
+    background: #050f25;
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+}
+
+input {
+    width: 50px;
+}
+</style>
+</head>
+
+<body>
+
+<header>World Cup Sweep</header>
+
+<div class="container">
+
+<div class="main">
+
+<h2>Teams</h2>
+
+<div class="card"><b>Jason</b><br>Turkey, Paraguay, DR Congo, Egypt</div>
+<div class="card"><b>Allison</b><br>Australia, Ivory Coast, Norway, Switzerland</div>
+<div class="card"><b>AP</b><br>Bosnia, Uruguay, USA, Argentina</div>
+<div class="card"><b>Bec</b><br>South Korea, Curacao, Czech Republic, Cape Verde</div>
+<div class="card"><b>Chrissy</b><br>Germany, Saudi Arabia, South Africa, Brazil</div>
+<div class="card"><b>Daniel</b><br>France, Austria, Uzbekistan, Belgium</div>
+<div class="card"><b>Kase</b><br>Morocco, Colombia, NZ, Japan</div>
+<div class="card"><b>Niall</b><br>Netherlands, Sweden, Ghana, Croatia</div>
+<div class="card"><b>Reuben</b><br>Panama, Spain, Algeria, Iraq</div>
+<div class="card"><b>Sarah</b><br>Scotland, Senegal, Tunisia, Ecuador</div>
+<div class="card"><b>Tom</b><br>Iran, Jordan, Portugal, Qatar</div>
+
+<h2>Leaderboard</h2>
+<table id="leaderboard"></table>
+
+</div>
+
+<div class="spares">
+<h3>Spares</h3>
+Mexico<br>Haiti<br>England<br>Canada
+</div>
+
+</div>
+
+<script>
+const players = [
+"Jason","Allison","AP","Bec","Chrissy","Daniel",
+"Kase","Niall","Reuben","Sarah","Tom"
+];
+
+function load() {
+    let scores = JSON.parse(localStorage.getItem("scores")) || {};
+    let table = document.getElementById("leaderboard");
+
+    table.innerHTML = "<tr><th>Name</th><th>Points</th></tr>";
+
+    players.sort((a,b)=>(scores[b]||0)-(scores[a]||0));
+
+    players.forEach(name=>{
+        let row = document.createElement("tr");
+
+        let score = scores[name] || 0;
+
+        let nameCell = document.createElement("td");
+        nameCell.innerText = name;
+
+        let input = document.createElement("input");
+        input.value = score;
+
+        input.onchange = () => {
+            scores[name] = parseInt(input.value)||0;
+            localStorage.setItem("scores", JSON.stringify(scores));
+            load();
+        };
+
+        let scoreCell = document.createElement("td");
+        scoreCell.appendChild(input);
+
+        row.appendChild(nameCell);
+        row.appendChild(scoreCell);
+        table.appendChild(row);
+    });
+}
+
+load();
+</script>
+
+</body>
+</html>
