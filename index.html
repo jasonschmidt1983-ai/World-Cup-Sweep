@@ -1,132 +1,82 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8" />
-<title>NSW Coordinator Catchments</title>
-
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<meta charset="utf-8">
+<title>World Cup Sweep</title>
 
 <style>
-  #map { height: 100vh; }
-
-  .legend {
-    background: white;
-    padding: 10px;
-    font-size: 13px;
-    line-height: 18px;
+  body {
+    font-family: Arial, sans-serif;
+    text-align: centre;
+    background: #f5f5f5;
+    padding: 20px;
   }
 
-  .popup-title {
-    font-weight: bold;
+  h1 {
+    margin-bottom: 10px;
+  }
+
+  button {
+    padding: 10px 15px;
+    margin: 10px;
     font-size: 14px;
+    cursor: pointer;
+  }
+
+  table {
+    margin: 20px auto;
+    border-collapse: collapse;
+    width: 300px;
+    background: white;
+  }
+
+  th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+  }
+
+  th {
+    background: #0078d4;
+    color: white;
+  }
+
+  .nav {
+    margin-bottom: 20px;
+  }
+
+  .nav a {
+    display: inline-block;
+    padding: 8px 12px;
+    background: #0078d4;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
   }
 </style>
 </head>
 
 <body>
 
-<div id="map"></div>
+<div class="nav">
+  <a href="map/">View NSW Catchment Map</a>
+</div>
+
+<h1>🏆 World Cup Sweep</h1>
+
+<button onclick="drawTeams()">Draw Teams</button>
+<button onclick="resetTeams()">Reset</button>
+
+<table>
+  <thead>
+    <tr>
+      <th>Player</th>
+      <th>Team</th>
+    </tr>
+  </thead>
+  <tbody id="tableBody"></tbody>
+</table>
 
 <script>
 
-const map = L.map('map').setView([-33.5, 147], 6);
-
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-
-// Load data
-fetch('regions.json')
-.then(res => res.json())
-.then(regions => {
-
-  const colours = ["#e41a1c","#377eb8","#4daf4a","#ff7f00","#984ea3","#a65628","#f781bf"];
-
-  regions.forEach((r, i) => {
-    r.colour = colours[i % colours.length];
-  });
-
-  fetch('nsw_lga.geojson')
-  .then(res => res.json())
-  .then(geo => {
-
-    function getRegion(lgaName) {
-      return regions.find(r => r.lgas.includes(lgaName));
-    }
-
-    function style(feature) {
-      const region = getRegion(feature.properties.LGA_NAME);
-
-      return {
-        weight: 1,
-        color: "#333",
-        fillColor: region ? region.colour : "#ccc",
-        fillOpacity: region ? 0.7 : 0.2
-      };
-    }
-
-    function highlightFeature(e) {
-      const layer = e.target;
-      layer.setStyle({
-        weight: 2,
-        color: "#000",
-        fillOpacity: 0.9
-      });
-    }
-
-    function resetHighlight(e) {
-      geoLayer.resetStyle(e.target);
-    }
-
-    function onEachFeature(feature, layer) {
-      const region = getRegion(feature.properties.LGA_NAME);
-
-      if (!region) return;
-
-      // Popup (FULL contact card ✅)
-      layer.bindPopup(`
-        <div class="popup-title">${region.coordinator}</div>
-        <div>${region.region}</div>
-        <br>
-        📧 ${region.email}<br>
-        📞 ${region.phone}
-      `);
-
-      layer.on({
-        mouseover: highlightFeature,
-        mouseout: resetHighlight
-      });
-    }
-
-    const geoLayer = L.geoJSON(geo, {
-      style: style,
-      onEachFeature: onEachFeature
-    }).addTo(map);
-
-    // ✅ Legend
-    const legend = L.control({position: 'bottomright'});
-
-    legend.onAdd = function () {
-      const div = L.DomUtil.create('div', 'legend');
-
-      regions.forEach(r => {
-        div.innerHTML += `
-          <div>
-            <span style="background:${r.colour};width:12px;height:12px;display:inline-block;margin-right:6px;"></span>
-            ${r.coordinator}
-          </div>
-        `;
-      });
-
-      return div;
-    };
-
-    legend.addTo(map);
-
-  });
-
-});
-
-</script>
-
-</body>
-</html>
+// Players (edit these)
+const players = [
