@@ -24,6 +24,43 @@ header {
     letter-spacing: 1px;
 }
 
+/* MATCH CENTRE */
+.match-centre {
+    background: linear-gradient(160deg, #122c5c, #091835);
+    padding: 20px;
+    margin: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(0,198,255,0.3);
+    text-align: center;
+}
+
+.match-centre h2 {
+    margin-top: 0;
+    color: #00c6ff;
+}
+
+.match-centre a {
+    background: #00c6ff;
+    padding: 10px 20px;
+    color: black;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    transition: 0.3s;
+}
+
+.match-centre a:hover {
+    background: #00d9ff;
+    transform: scale(1.05);
+}
+
+.match-centre iframe {
+    border: none;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
 /* LAYOUT */
 .container {
     display: flex;
@@ -126,6 +163,17 @@ input {
 <body>
 
 <header>🏆 World Cup Sweep 2026</header>
+
+<div class="match-centre">
+  <h2>⚽ Match Centre</h2>
+  <p>View live fixtures, scores, and standings</p>
+  <a href="https://kingdoggydog.github.io/worldcup2026/" target="_blank">View Live Schedule & Scores</a>
+  <iframe 
+    src="https://kingdoggydog.github.io/worldcup2026/"
+    width="100%" 
+    height="500">
+  </iframe>
+</div>
 
 <div class="container">
 
