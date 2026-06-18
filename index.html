@@ -10,101 +10,77 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background: radial-gradient(circle at top, #0b1c3d, #020917);
-    color: white;
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at top, #0b1c3d, #020917);
+  color: white;
 }
 
 header {
-    background: linear-gradient(90deg, #004aad, #00c6ff);
-    padding: 20px;
-    text-align: center;
-    font-size: 30px;
-    font-weight: 600;
+  background: linear-gradient(90deg, #004aad, #00c6ff);
+  padding: 20px;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 600;
 }
 
-.container { display: flex; min-height: calc(100vh - 80px); }
+.container {
+  display: flex;
+  min-height: calc(100vh - 80px);
+}
 
 .sidebar-left {
-    width: 20%;
-    background: #050f25;
-    padding: 20px;
-    border-right: 2px solid #1e3a8a;
+  width: 20%;
+  background: #050f25;
+  padding: 20px;
+  border-right: 2px solid #1e3a8a;
 }
 
-.main { width: 80%; padding: 25px; }
+.main {
+  width: 80%;
+  padding: 25px;
+}
 
-h2 { color: #00c6ff; margin-bottom: 15px; }
+h2 {
+  color: #00c6ff;
+  margin-bottom: 15px;
+}
 
 .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 15px;
 }
 
 .card {
-    background: linear-gradient(160deg, #122c5c, #091835);
-    padding: 14px;
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.08);
+  background: linear-gradient(160deg, #122c5c, #091835);
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
 }
 
 .card.leader-card {
-    background: linear-gradient(160deg, #2a4a00, #1a3a00);
-    border: 2px solid #00ff88;
+  background: linear-gradient(160deg, #2a4a00, #1a3a00);
+  border: 2px solid #00ff88;
 }
 
 .name {
-    font-weight: bold;
-    margin-bottom: 8px;
-    color: #00c6ff;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #00c6ff;
 }
 
-.card.leader-card .name { color: #00ff88; }
-
 .team {
-    font-size: 13px;
-    margin: 5px 0;
-    display: flex;
-    justify-content: space-between;
+  font-size: 13px;
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
 }
 
 .flag {
-    width: 16px;
-    height: 12px;
-    margin-right: 6px;
+  width: 16px;
+  height: 12px;
+  margin-right: 6px;
 }
-
-.team-info {
-    flex: 1;
-    display: flex;
-    align-items: center;
-}
-
-.result {
-    font-weight: bold;
-    padding: 2px 6px;
-    border-radius: 3px;
-    font-size: 11px;
-}
-
-.win { background: rgba(0,255,136,0.3); color: #00ff88; }
-.draw { background: rgba(255,165,0,0.3); color: #ffa500; }
-.loss { background: rgba(255,68,68,0.3); color: #ff4444; }
-
-.leaderboard-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-}
-
-.leaderboard-table th,
-.leaderboard-table td {
-    padding: 8px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.leaderboard-table th { color: #00c6ff; }
 </style>
 </head>
 
@@ -114,15 +90,15 @@ h2 { color: #00c6ff; margin-bottom: 15px; }
 
 <div class="container">
 
-<div class="sidebar-left">
-<h2>🏆 Leaderboard</h2>
-<table class="leaderboard-table" id="leaderboard"></table>
-</div>
+  <div class="sidebar-left">
+    <h2>🏆 Leaderboard</h2>
+    <table class="leaderboard-table" id="leaderboard"></table>
+  </div>
 
-<div class="main">
-<h2>Teams</h2>
-<div class="grid" id="teamsGrid"></div>
-</div>
+  <div class="main">
+    <h2>Teams</h2>
+    <div class="grid" id="teamsGrid"></div>
+  </div>
 
 </div>
 
@@ -147,9 +123,44 @@ const teamOwners = {
   "Mexico":"Riley","Haiti":"Riley","England":"Riley","Canada":"Riley"
 };
 
-const flagMap = {
-  "Mexico":"mx","Haiti":"ht","England":"gb-eng","Canada":"ca",
-  "Australia":"au","Japan":"jp","Brazil":"br","Germany":"de"
-};
+let leader = "";
 
-function getFlag(team) {
+function updateLeaderboard(scores) {
+  const table = document.getElementById("leaderboard");
+  table.innerHTML = "<tr><th>#</th><th>Name</th><th>Pts</th></tr>";
+
+  players.forEach(p => scores[p] ??= 0);
+  const sorted = [...players].sort((a,b) => scores[b] - scores[a]);
+
+  sorted.forEach((name,i) => {
+    if (i === 0) leader = name;
+    table.innerHTML += `<tr><td>${i+1}</td><td>${name}</td><td>${scores[name]}</td></tr>`;
+  });
+}
+
+function renderTeams() {
+  const grid = document.getElementById("teamsGrid");
+  grid.innerHTML = "";
+
+  const grouped = {};
+  for (let team in teamOwners) {
+    grouped[teamOwners[team]] ??= [];
+    grouped[teamOwners[team]].push(team);
+  }
+
+  for (let person in grouped) {
+    const card = document.createElement("div");
+    card.className = "card" + (person === leader ? " leader-card" : "");
+    card.innerHTML =
+      `<div class="name">${person}</div>` +
+      grouped[person].map(t => `<div class="team">🏳️ ${t}</div>`).join("");
+    grid.appendChild(card);
+  }
+}
+
+updateLeaderboard({});
+renderTeams();
+</script>
+
+</body>
+</html>
