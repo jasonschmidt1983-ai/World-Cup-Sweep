@@ -7,11 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
     font-family: 'Poppins', sans-serif;
@@ -19,75 +15,43 @@ body {
     color: white;
 }
 
-/* HEADER */
 header {
     background: linear-gradient(90deg, #004aad, #00c6ff);
     padding: 20px;
     text-align: center;
     font-size: 30px;
     font-weight: 600;
-    letter-spacing: 1px;
 }
 
-/* MAIN CONTAINER */
-.container {
-    display: flex;
-    min-height: calc(100vh - 80px);
-}
+.container { display: flex; min-height: calc(100vh - 80px); }
 
-/* LEFT SIDEBAR - LEADERBOARD */
 .sidebar-left {
     width: 20%;
     background: #050f25;
     padding: 20px;
     border-right: 2px solid #1e3a8a;
-    overflow-y: auto;
 }
 
-/* MAIN CONTENT */
-.main {
-    width: 80%;
-    padding: 25px;
-    overflow-y: auto;
-}
+.main { width: 80%; padding: 25px; }
 
-/* HEADINGS */
-h2 {
-    color: #00c6ff;
-    margin-bottom: 15px;
-}
+h2 { color: #00c6ff; margin-bottom: 15px; }
 
-/* GRID */
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 15px;
-    margin-bottom: 30px;
 }
 
-/* PLAYER CARD */
 .card {
     background: linear-gradient(160deg, #122c5c, #091835);
     padding: 14px;
     border-radius: 10px;
-    transition: 0.3s;
     border: 1px solid rgba(255,255,255,0.08);
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0 15px rgba(0,198,255,0.5);
-}
-
-/* LEADER CARD */
 .card.leader-card {
     background: linear-gradient(160deg, #2a4a00, #1a3a00);
     border: 2px solid #00ff88;
-    box-shadow: 0 0 20px rgba(0,255,136,0.4);
-}
-
-.card.leader-card:hover {
-    box-shadow: 0 0 30px rgba(0,255,136,0.6);
 }
 
 .name {
@@ -96,24 +60,19 @@ h2 {
     color: #00c6ff;
 }
 
-.card.leader-card .name {
-    color: #00ff88;
-}
+.card.leader-card .name { color: #00ff88; }
 
-/* TEAMS */
 .team {
     font-size: 13px;
     margin: 5px 0;
     display: flex;
     justify-content: space-between;
-    align-items: center;
 }
 
 .flag {
     width: 16px;
     height: 12px;
     margin-right: 6px;
-    border-radius: 2px;
 }
 
 .team-info {
@@ -127,163 +86,25 @@ h2 {
     padding: 2px 6px;
     border-radius: 3px;
     font-size: 11px;
-    margin-left: 8px;
-    min-width: 28px;
-    text-align: center;
 }
 
-.win {
-    background: rgba(0, 255, 136, 0.3);
-    color: #00ff88;
-}
+.win { background: rgba(0,255,136,0.3); color: #00ff88; }
+.draw { background: rgba(255,165,0,0.3); color: #ffa500; }
+.loss { background: rgba(255,68,68,0.3); color: #ff4444; }
 
-.draw {
-    background: rgba(255, 165, 0, 0.3);
-    color: #ffa500;
-}
-
-.loss {
-    background: rgba(255, 68, 68, 0.3);
-    color: #ff4444;
-}
-
-/* LEADERBOARD TABLE */
 .leaderboard-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
     font-size: 13px;
 }
 
 .leaderboard-table th,
 .leaderboard-table td {
     padding: 8px;
-    text-align: left;
     border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-.leaderboard-table th {
-    color: #00c6ff;
-    font-weight: 600;
-    padding: 10px 8px;
-}
-
-.leaderboard-table td:first-child {
-    font-weight: bold;
-    width: 40px;
-    text-align: center;
-}
-
-.leaderboard-table tr:nth-child(2) {
-    background: rgba(255, 215, 0, 0.15);
-}
-
-.leaderboard-table tr:hover {
-    background: rgba(0, 198, 255, 0.1);
-}
-
-/* RESULTS SECTION */
-.results-section {
-    margin-top: 30px;
-}
-
-#resultsInput {
-    width: 100%;
-    padding: 10px;
-    background: #091835;
-    border: 1px solid #00c6ff;
-    color: white;
-    border-radius: 6px;
-    font-family: 'Courier New', monospace;
-    resize: vertical;
-}
-
-.button-group {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-button {
-    background: #00c6ff;
-    color: black;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-button:hover {
-    background: #00d9ff;
-    transform: scale(1.02);
-}
-
-button.danger {
-    background: #ff4444;
-    color: white;
-}
-
-button.danger:hover {
-    background: #ff6666;
-}
-
-/* GROUPS FRAME */
-.groups-frame {
-    background: #050f25;
-    border-radius: 10px;
-    border: 1px solid rgba(0,198,255,0.3);
-    overflow: hidden;
-    margin-top: 20px;
-}
-
-.groups-frame iframe {
-    display: block;
-}
-
-/* RESPONSIVE */
-@media (max-width: 900px) {
-    .container {
-        flex-direction: column;
-    }
-
-    .sidebar-left,
-    .main {
-        width: 100%;
-        min-height: auto;
-    }
-
-    .grid {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    }
-
-    .groups-frame iframe {
-        height: 400px !important;
-    }
-}
-
-@media (max-width: 600px) {
-    .grid {
-        grid-template-columns: 1fr;
-    }
-
-    header {
-        font-size: 24px;
-    }
-
-    .button-group {
-        flex-direction: column;
-    }
-
-    button {
-        width: 100%;
-    }
-
-    .groups-frame iframe {
-        height: 300px !important;
-    }
-}
+.leaderboard-table th { color: #00c6ff; }
 </style>
 </head>
 
@@ -293,47 +114,15 @@ button.danger:hover {
 
 <div class="container">
 
-  <!-- LEFT: LEADERBOARD -->
-  <div class="sidebar-left">
-    <h2>🏆 Leaderboard</h2>
-    <table class="leaderboard-table" id="leaderboard"></table>
-  </div>
+<div class="sidebar-left">
+<h2>🏆 Leaderboard</h2>
+<table class="leaderboard-table" id="leaderboard"></table>
+</div>
 
-  <!-- MAIN: TEAMS + RESULTS -->
-  <div class="main">
-
-    <h2>Teams</h2>
-    <div class="grid" id="teamsGrid"></div>
-
-    <div class="results-section">
-      <h2>📝 Update Results</h2>
-      <p style="color:#aaa; font-size:13px; margin-bottom:10px;">Format: Team1 Score-Score Team2 (one per line)</p>
-     <textarea id="resultsInput" rows="8">
-Australia 2-1 Japan
-Brazil 1-1 Germany
-</textarea>
-
-      <br><br>
-
-      <div class="button-group">
-        <button onclick="saveResults()">💾 Save Results</button>
-        <button onclick="loadResults()">🔄 Reload</button>
-        <button class="danger" onclick="resetScores()">🗑️ Reset All</button>
-      </div>
-    </div>
-
-    <h2 style="margin-top:40px;">📊 Group Standings</h2>
-
-    <div class="groups-frame">
-      <iframe 
-        src="https://kingdoggydog.github.io/worldcup2026/groups.html"
-        width="100%" 
-        height="600" 
-        style="border:none;">
-      </iframe>
-    </div>
-
-  </div>
+<div class="main">
+<h2>Teams</h2>
+<div class="grid" id="teamsGrid"></div>
+</div>
 
 </div>
 
@@ -344,266 +133,23 @@ const players = [
 ];
 
 const teamOwners = {
-"Australia":"Allison","Ivory Coast":"Allison","Norway":"Allison","Switzerland":"Allison",
-"Bosnia":"AP","Uruguay":"AP","USA":"AP","Argentina":"AP",
-"South Korea":"Bec","Curacao":"Bec","Czech Republic":"Bec","Cape Verde":"Bec",
-"Germany":"Chrissy","Saudi Arabia":"Chrissy","South Africa":"Chrissy","Brazil":"Chrissy",
-"France":"Daniel","Austria":"Daniel","Uzbekistan":"Daniel","Belgium":"Daniel",
-"Turkey":"Jason","Paraguay":"Jason","DR Congo":"Jason","Egypt":"Jason",
-"Morocco":"Kase","Colombia":"Kase","New Zealand":"Kase","Japan":"Kase",
-"Netherlands":"Niall","Sweden":"Niall","Ghana":"Niall","Croatia":"Niall",
-"Panama":"Reuben","Spain":"Reuben","Algeria":"Reuben","Iraq":"Reuben",
-"Scotland":"Sarah","Senegal":"Sarah","Tunisia":"Sarah","Ecuador":"Sarah",
-"Iran":"Tom","Jordan":"Tom","Portugal":"Tom","Qatar":"Tom""Mexico": "Riley",
-"Haiti": "Riley",
-"England": "Riley",
-"Canada": "Riley",
+  "Australia":"Allison","Ivory Coast":"Allison","Norway":"Allison","Switzerland":"Allison",
+  "Bosnia":"AP","Uruguay":"AP","USA":"AP","Argentina":"AP",
+  "South Korea":"Bec","Curacao":"Bec","Czech Republic":"Bec","Cape Verde":"Bec",
+  "Germany":"Chrissy","Saudi Arabia":"Chrissy","South Africa":"Chrissy","Brazil":"Chrissy",
+  "France":"Daniel","Austria":"Daniel","Uzbekistan":"Daniel","Belgium":"Daniel",
+  "Turkey":"Jason","Paraguay":"Jason","DR Congo":"Jason","Egypt":"Jason",
+  "Morocco":"Kase","Colombia":"Kase","New Zealand":"Kase","Japan":"Kase",
+  "Netherlands":"Niall","Sweden":"Niall","Ghana":"Niall","Croatia":"Niall",
+  "Panama":"Reuben","Spain":"Reuben","Algeria":"Reuben","Iraq":"Reuben",
+  "Scotland":"Sarah","Senegal":"Sarah","Tunisia":"Sarah","Ecuador":"Sarah",
+  "Iran":"Tom","Jordan":"Tom","Portugal":"Tom","Qatar":"Tom",
+  "Mexico":"Riley","Haiti":"Riley","England":"Riley","Canada":"Riley"
 };
 
-renderRiley(grid);
-    
 const flagMap = {
-    "Mexico": "mx", "Haiti": "ht", "England": "gb-eng", "Canada": "ca",
-    "Australia": "au", "Ivory Coast": "ci", "Norway": "no", "Switzerland": "ch",
-    "Bosnia": "ba", "Uruguay": "uy", "USA": "us", "Argentina": "ar",
-    "South Korea": "kr", "Curacao": "cw", "Czech Republic": "cz", "Cape Verde": "cv",
-    "Germany": "de", "Saudi Arabia": "sa", "South Africa": "za", "Brazil": "br",
-    "France": "fr", "Austria": "at", "Uzbekistan": "uz", "Belgium": "be",
-    "Turkey": "tr", "Paraguay": "py", "DR Congo": "cd", "Egypt": "eg",
-    "Morocco": "ma", "Colombia": "co", "New Zealand": "nz", "Japan": "jp",
-    "Netherlands": "nl", "Sweden": "se", "Ghana": "gh", "Croatia": "hr",
-    "Panama": "pa", "Spain": "es", "Algeria": "dz", "Iraq": "iq",
-    "Scotland": "gb-sct", "Senegal": "sn", "Tunisia": "tn", "Ecuador": "ec",
-    "Iran": "ir", "Jordan": "jo", "Portugal": "pt", "Qatar": "qa"
+  "Mexico":"mx","Haiti":"ht","England":"gb-eng","Canada":"ca",
+  "Australia":"au","Japan":"jp","Brazil":"br","Germany":"de"
 };
 
 function getFlag(team) {
-    let code = flagMap[team] || "un";
-    return `https://flagcdn.com/w20/${code}.png`;
-}
-
-let teamResults = {};
-let teamGoals = {};
-let leader = "";
-
-// SAVE RESULTS
-function saveResults() {
-    const text = document.getElementById("resultsInput").value;
-    localStorage.setItem("matchResults", text);
-    calculateScores();
-    alert("✅ Results saved!");
-}
-
-// LOAD RESULTS
-function loadResults() {
-    const saved = localStorage.getItem("matchResults");
-    if (saved) {
-        document.getElementById("resultsInput").value = saved;
-        calculateScores();
-        alert("✅ Results reloaded!");
-    }
-}
-
-// RESET SCORES
-function resetScores() {
-    if (confirm("Are you sure you want to reset all results?")) {
-        localStorage.removeItem("matchResults");
-        document.getElementById("resultsInput").value = "";
-        teamResults = {};
-        teamGoals = {};
-        calculateScores();
-        alert("✅ All results cleared!");
-    }
-}
-
-// CALCULATE SCORES
-function calculateScores() {
-    let text = document.getElementById("resultsInput").value;
-    let lines = text.split("\n");
-
-    let scores = {};
-    teamResults = {};
-    teamGoals = {};
-
-    lines.forEach(line => {
-        let match = line.match(/(.+)\s(\d+)-(\d+)\s(.+)/);
-if (!match) {
-  alert("⚠️ Use format: Team1 2-1 Team2 (one per line)");
-  return;
-}
-
-        let t1 = match[1].trim();
-        let s1 = parseInt(match[2]);
-        let s2 = parseInt(match[3]);
-        let t2 = match[4].trim();
-
-        let p1 = teamOwners[t1];
-        let p2 = teamOwners[t2];
-
-        if (!p1 || !p2) return;
-
-        if (!scores[p1]) scores[p1] = 0;
-        if (!scores[p2]) scores[p2] = 0;
-
-        // Track goals
-        teamGoals[t1] = s1;
-        teamGoals[t2] = s2;
-
-        if (s1 > s2) {
-            scores[p1] += 3;
-            teamResults[t1] = "W";
-            teamResults[t2] = "L";
-        } else if (s2 > s1) {
-            scores[p2] += 3;
-            teamResults[t1] = "L";
-            teamResults[t2] = "W";
-        } else {
-            scores[p1] += 1;
-            scores[p2] += 1;
-            teamResults[t1] = "D";
-            teamResults[t2] = "D";
-        }
-    });
-
-    updateLeaderboard(scores);
-    renderTeams();
-}
-
-// UPDATE LEADERBOARD
-function updateLeaderboard(scores) {
-    let table = document.getElementById("leaderboard");
-    
-    table.innerHTML = `
-        <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Pts</th>
-        </tr>
-    `;
-
-    // Ensure ALL players exist (even if 0 points)
-    players.forEach(player => {
-        if (!scores[player]) scores[player] = 0;
-    });
-
-   let sorted = [...players].sort((a,b) => scores[b] - scores[a]);
-
-    sorted.forEach((name, index) => {
-        let row = document.createElement("tr");
-
-        if (index === 0) {
-            row.style.background = "rgba(255,215,0,0.2)";
-            leader = name; // Track the leader
-        }
-
-        let medal = "";
-        if (index === 0) medal = "🥇 ";
-        else if (index === 1) medal = "🥈 ";
-        else if (index === 2) medal = "🥉 ";
-
-        row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${medal}${name}</td>
-            <td>${scores[name]}</td>
-        `;
-
-        table.appendChild(row);
-    });
-}
-
-// RENDER TEAM CARDS
-function renderTeams() {
-    const grid = document.getElementById("teamsGrid");
-    grid.innerHTML = "";
-
-    let grouped = {};
-
-    for (let team in teamOwners) {
-        let owner = teamOwners[team];
-
-        if (!grouped[owner]) grouped[owner] = [];
-        grouped[owner].push(team);
-    }
-
-    // Render all players
-    for (let person in grouped) {
-        let card = document.createElement("div");
-
-        let highlight = person === leader ? "leader-card" : "";
-        card.className = "card " + highlight;
-
-        let name = `<div class="name">${person}</div>`;
-
-        let teams = grouped[person].map(team => {
-            let result = teamResults[team] || "";
-            let className = "";
-
-            if (result === "W") className = "win";
-            if (result === "D") className = "draw";
-            if (result === "L") className = "loss";
-
-            let goals = teamGoals[team] || 0;
-
-            return `
-                <div class="team">
-                    <div class="team-info">
-                        <img class="flag" src="${getFlag(team)}">
-                        ${team} (${goals})
-                    </div>
-                    <span class="result ${className}">
-                        ${result}
-                    </span>
-                </div>
-            `;
-        }).join("");
-
-        card.innerHTML = name + teams;
-        grid.appendChild(card);
-    }
-
-    // Add spares as last card
-    renderSparesInline(grid);
-}
-
-// RENDER SPARES INLINE
-function renderSparesInline(grid) {
-    let card = document.createElement("div");
-
-    let highlight = (leader === "Spares") ? "leader-card" : "";
-    card.className = "card " + highlight;
-
-    let name = `<div class="name">🎟 Spares</div>`;
-
-    let teams = spares.map(team => {
-        let result = teamResults[team] || "";
-        let className = "";
-
-        if (result === "W") className = "win";
-        if (result === "D") className = "draw";
-        if (result === "L") className = "loss";
-
-        let goals = teamGoals[team] || 0;
-
-        return `
-            <div class="team">
-                <div class="team-info">
-                    <img class="flag" src="${getFlag(team)}">
-                    ${team} (${goals})
-                </div>
-                <span class="result ${className}">
-                    ${result}
-                </span>
-            </div>
-        `;
-    }).join("");
-
-    card.innerHTML = name + teams;
-    grid.appendChild(card);
-}
-
-// AUTO LOAD ON PAGE OPEN
-loadResults();
-</script>
-
-</body>
-</html>
