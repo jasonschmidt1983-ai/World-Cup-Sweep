@@ -568,7 +568,8 @@ function renderTeams() {
 function renderSparesInline(grid) {
     let card = document.createElement("div");
 
-   let highlight = (leader === "Riley") ? "leader-card" : "";
+    let highlight = (leader === "Riley") ? "leader-card" : "";
+    card.className = "card " + highlight;
 
     let name = `<div class="name">Riley</div>`;
 
