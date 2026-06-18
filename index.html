@@ -340,7 +340,7 @@ Brazil 1-1 Germany
 <script>
 const players = [
   "Allison","AP","Bec","Chrissy","Daniel",
-  "Jason","Kase","Niall","Reuben","Sarah","Tom"
+  "Jason","Kase","Niall","Reuben","Sarah","Tom","Riley"
 ];
 
 const teamOwners = {
@@ -358,7 +358,9 @@ const teamOwners = {
 };
 
 const spares = ["Mexico", "Haiti", "England", "Canada"];
-
+spares.forEach(team => {
+  teamOwners[team] = "Riley";
+});
 const flagMap = {
     "Mexico": "mx", "Haiti": "ht", "England": "gb-eng", "Canada": "ca",
     "Australia": "au", "Ivory Coast": "ci", "Norway": "no", "Switzerland": "ch",
@@ -566,10 +568,9 @@ function renderTeams() {
 function renderSparesInline(grid) {
     let card = document.createElement("div");
 
-    let highlight = (leader === "Spares") ? "leader-card" : "";
-    card.className = "card " + highlight;
+   let highlight = (leader === "Riley") ? "leader-card" : "";
 
-    let name = `<div class="name">🎟 Spares</div>`;
+    let name = `<div class="name">Riley</div>`;
 
     let teams = spares.map(team => {
         let result = teamResults[team] || "";
